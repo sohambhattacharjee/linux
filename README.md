@@ -1,5 +1,6 @@
 # CMPE-281 Assignment 1 
 #### [Soham Bhattacharjee](mailto:soham.bhattacharjee@sjsu.edu)
+
 ##### These steps can be followed to complete the assignment on a mac, running intel CPU. This will be using a VM to run another VM (nested virtualization).
 ### Set up VM
 Download [VMWare Fusion]( https://customerconnect.vmware.com/en/downloads/info/slug/desktop_end_user_computing/vmware_fusion/12_0) and install the software on your machine. You’d need to register at vmware to get a non-commercial use key or use the software in trial mode for 30 days.
@@ -25,13 +26,13 @@ Then clone the forked repo into a directory of the VM.
 
 ### Missing modules
 We’ve already installed git in the previous step. In order to complete the rest of the assignment, we need to install a few more modules:
-`sudo apt install make`
-`sudo apt-get install gcc`
-`sudo apt-get install flex`
-`sudo apt-get install bison`
-`sudo apt-get install libssl-dev`
-`sudo apt install libelf-dev`
-`sudo apt install dwarves`
+- `sudo apt install make`
+- `sudo apt-get install gcc`
+- `sudo apt-get install flex`
+- `sudo apt-get install bison`
+- `sudo apt-get install libssl-dev`
+- `sudo apt install libelf-dev`
+- `sudo apt install dwarves`
 
 Copy over the `/boot/config.X.Y.Z` file as `.config` file in the `linux` directory.
 In the .config file, find and comment out the line
@@ -39,9 +40,9 @@ In the .config file, find and comment out the line
 Then run `make oldconfig`. Accept the defaults for all options.
 
 ### Build the linux kernel
-`cd linux`
-`make -j 4 modules`
-`make -j 4`
+- `cd linux`
+- `make -j 4 modules`
+- `make -j 4`
 
 Since we commented out the trusted key, the make process will create a new key during build.
 
