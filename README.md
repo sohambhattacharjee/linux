@@ -58,7 +58,10 @@ This updates the kernel version running on the VM. Reboot the VM for the update 
     `cd ..`
     `make`
 2.	Step 1 generates a .ko file (kernel object file). Add this to the kernel by running
-    `sudo insmod cmpe-283-1.ko`
+    `sudo insmod cmpe283-1.ko`
+This prints all the output in the message buffer. To read the buffer, run `sudo dmesg`. The output from the assignment will be printed towards the end.
 
+### Cleanup
+`sudo rmmod cmpe283-1` would remove the module from kernel. Once the kernel has been built, it doesn't need to be rebuilt again. instead, only building the module and installing it would suffice.
 
 
