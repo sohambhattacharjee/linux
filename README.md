@@ -60,6 +60,9 @@ This updates the kernel version running on the VM. Reboot the VM for the update 
 2.	Step 1 generates a .ko file (kernel object file). Add this to the kernel by running
     `sudo insmod cmpe283-1.ko`
 This prints all the output in the message buffer. To read the buffer, run `sudo dmesg`. The output from the assignment will be printed towards the end.
+<img width="692" alt="Screen Shot 2021-10-29 at 1 35 41 AM" src="https://user-images.githubusercontent.com/24656792/139404426-643e3910-8262-407c-b6aa-8d9c97f4d85e.png">
+<img width="740" alt="Screen Shot 2021-10-29 at 1 36 48 AM" src="https://user-images.githubusercontent.com/24656792/139404431-ce3058e8-bbe4-48d1-8919-8b8b748b1ea9.png">
+
 
 ### Cleanup
 `sudo rmmod cmpe283-1` would remove the module from kernel. Once the kernel has been built, it doesn't need to be rebuilt again. instead, only building the module and installing it would suffice.
