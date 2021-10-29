@@ -255,3 +255,6 @@ cleanup_module(void)
 {
 	printk(KERN_INFO "CMPE 283 Assignment 1 Module Exits\n");
 }
+
+
+MODULE_LICENSE("GPL v2");
