@@ -20,9 +20,9 @@ Run `ssh-keygen -t rsa` to generate a new key in the VM terminal. Copy this Key 
 
 Install git on the ubuntu machine by running `sudo apt install git`
 Then clone the forked repo into a directory of the VM.
-`mkdir cmpe283`
-`cd cmpe283`
-`git clone git@github.com:sohambhattacharjee/linux.git`
+- `mkdir cmpe283`
+- `cd cmpe283`
+- `git clone git@github.com:sohambhattacharjee/linux.git`
 
 ### Missing modules
 We’ve already installed git in the previous step. In order to complete the rest of the assignment, we need to install a few more modules:
