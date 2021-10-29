@@ -105,7 +105,7 @@ struct capability_info secondary_procbased[27] =
 	{25, "Use TSC scaling"},
 	{26, "Enable user wait and pause"},
 	{28, "Enable ENCLV exiting"}
-}
+};
 
 /*
  * VM Exit Controls
@@ -127,7 +127,7 @@ struct capability_info exit_controls[14] =
 	{25, "Clear IA32_RTIT_CTL"},
 	{28, "Load CET state"},
 	{29, "Load PKRS"}
-}
+};
 
 /*
  * VM Entry Controls
@@ -147,7 +147,7 @@ struct capability_info entry_controls[12] =
 	{18, "Load IA32_RTIT_CTL"},
 	{20, "Load CET state"},
 	{22, "Load PKRS"}
-}
+};
 
 
 /*
@@ -255,6 +255,5 @@ cleanup_module(void)
 {
 	printk(KERN_INFO "CMPE 283 Assignment 1 Module Exits\n");
 }
-
 
 MODULE_LICENSE("GPL v2");
