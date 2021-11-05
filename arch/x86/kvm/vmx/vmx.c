@@ -68,7 +68,6 @@
 
 MODULE_AUTHOR("Qumranet");
 MODULE_LICENSE("GPL");
-
 #ifdef MODULE
 static const struct x86_cpu_id vmx_cpu_id[] = {
 	X86_MATCH_FEATURE(X86_FEATURE_VMX, NULL),
@@ -6052,8 +6051,30 @@ unexpected_vmexit:
 
 static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 {
-	int ret = __vmx_handle_exit(vcpu, exit_fastpath);
-
+	/**
+	 * CMPE-283 - Entry point for exit hander.
+	 * Generate timestamp here for the "before" handler
+	 * At the end of the method, generate the "after" timestamp
+	 * Get the delta of the 2 time stamps.
+	 * Store the delta against the vmx.exit_reason in exit_counter
+	 */
+	extern u64 exit_counter[69];
+	extern u64 cpu_cycles_counter[69];
+	extern u32 total_exits;
+	extern u64 total_cpu_cycles;
+	
+	int ret;
+	u64 before_cpu_cycles;
+	u64 after_cpu_cycles;
+	u64 delta;
+	total_exits ++;
+	before_cpu_cycles = rdtsc();
+	ret = __vmx_handle_exit(vcpu, exit_fastpath);
+	after_cpu_cycles = rdtsc();
+	delta = after_cpu_cycles - before_cpu_cycles;
+	exit_counter[(u64)vcpu->run->exit_reason] += 1;
+	cpu_cycles_counter[(u64)vcpu->run->exit_reason] += delta;
+	total_cpu_cycles += delta;
 	/*
 	 * Exit to user space when bus lock detected to inform that there is
 	 * a bus lock in guest.

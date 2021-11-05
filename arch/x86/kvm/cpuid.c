@@ -11,6 +11,7 @@
 
 #include <linux/kvm_host.h>
 #include <linux/export.h>
+#include <linux/module.h>
 #include <linux/vmalloc.h>
 #include <linux/uaccess.h>
 #include <linux/sched/stat.h>
@@ -24,6 +25,9 @@
 #include "mmu.h"
 #include "trace.h"
 #include "pmu.h"
+
+#define DEFINED_EXIT_COUNT 69
+
 
 /*
  * Unlike "struct cpuinfo_x86.x86_capability", kvm_cpu_caps doesn't need to be
@@ -1222,16 +1226,48 @@ bool kvm_cpuid(struct kvm_vcpu *vcpu, u32 *eax, u32 *ebx,
 }
 EXPORT_SYMBOL_GPL(kvm_cpuid);
 
+/**
+ * CMPE-283 - This is the arrays that will hold all the information
+ * about exits. It will contain the exit reason, the number of times
+ * that particular exit has occured, and number of cpu cycles spent
+ * handling that exit. These will be a cumulative sum.
+ * */
+u64 exit_counter[DEFINED_EXIT_COUNT];
+u64 cpu_cycles_counter[DEFINED_EXIT_COUNT];
+u32 total_exits;
+u64 total_cpu_cycles;
+
+EXPORT_SYMBOL(exit_counter);
+EXPORT_SYMBOL(cpu_cycles_counter);
+EXPORT_SYMBOL(total_exits);
+EXPORT_SYMBOL(total_cpu_cycles);
+
 int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 {
 	u32 eax, ebx, ecx, edx;
-
+	
 	if (cpuid_fault_enabled(vcpu) && !kvm_require_cpl(vcpu, 0))
 		return 1;
 
 	eax = kvm_rax_read(vcpu);
 	ecx = kvm_rcx_read(vcpu);
-	kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
+	if (eax == 0x4FFFFFFF || eax == 0x4FFFFFFE || eax == 0x4FFFFFFD || eax == 0x4FFFFFFC) {
+		/**
+		 * CMPE-283 - Handle custom input for CPUID here.
+		 * */
+		switch (eax) {
+			case 0x4FFFFFFF:
+				eax = total_exits;
+				break;
+			case 0x4FFFFFFE:
+				ebx = (total_cpu_cycles >> 32);
+				ecx = total_cpu_cycles;
+				break;
+		}
+		
+	} else {
+		kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
+	}
 	kvm_rax_write(vcpu, eax);
 	kvm_rbx_write(vcpu, ebx);
 	kvm_rcx_write(vcpu, ecx);

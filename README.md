@@ -68,4 +68,20 @@ This prints all the output in the message buffer. To read the buffer, run `sudo 
 ### Cleanup
 `sudo rmmod cmpe283-1` would remove the module from kernel. Once the kernel has been built, it doesn't need to be rebuilt again. instead, only building the module and installing it would suffice.
 
+# CMPE-283 Assignment 2
+
+As part of this assingment, the linux kernel would be updated (CPUID) to handle the following leaf nodes:
+- 0x4FFFFFFF:
+- 0x4FFFFFFE:
+
+### Test the code changes
+#### Prepare VM for nested virtualiztion
+- `sudo apt install virtinst`
+- `sudo apt install libvirt-clients`
+- `sudo apt install virt-top`
+- `sudo apt install qemu-kvm`
+- `sudo apt install libvirt-daemon`
+- `sudo apt install libvirt-daemon-systems`
+- `sudo apt install bridge-utils`
+- `sudo apt install virt-manager`
 
