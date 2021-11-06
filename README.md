@@ -74,7 +74,7 @@ As part of this assingment, the linux kernel would be updated (CPUID) to handle 
 - 0x4FFFFFFF: return the total number of interrupts handled by the hypervisor in %eax.
 - 0x4FFFFFFE: return the total cpu cycles spent in handling interrupts, with the high bits of the 64 bit number in %ebx and lo bits in %ecx
 
-The code changes have been made in arch/x86/kvm/cpuid.c and arch/x86/kvm/vmx/vmx.c (commit https://github.com/sohambhattacharjee/linux/commit/b976b11ae50439b9a7002de7d269d4c0da53b74e)
+The code changes have been made in arch/x86/kvm/cpuid.c and arch/x86/kvm/vmx/vmx.c 
 
 
 
