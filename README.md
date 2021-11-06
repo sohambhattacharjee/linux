@@ -70,9 +70,13 @@ This prints all the output in the message buffer. To read the buffer, run `sudo 
 
 # CMPE-283 Assignment 2
 
-As part of this assingment, the linux kernel would be updated (CPUID) to handle the following leaf nodes:
-- 0x4FFFFFFF:
-- 0x4FFFFFFE:
+As part of this assingment, the linux kernel would be updated (CPUID) to handle the following leaf nodes (%eax):
+- 0x4FFFFFFF: return the total number of interrupts handled by the hypervisor in %eax.
+- 0x4FFFFFFE: return the total cpu cycles spent in handling interrupts, with the high bits of the 64 bit number in %ebx and lo bits in %ecx
+
+The code changes have been made in arch/x86/kvm/cpuid.c and arch/x86/kvm/vmx/vmx.c (commit https://github.com/sohambhattacharjee/linux/commit/b976b11ae50439b9a7002de7d269d4c0da53b74e)
+
+
 
 ### Test the code changes
 #### Prepare VM for nested virtualiztion
@@ -84,4 +88,10 @@ As part of this assingment, the linux kernel would be updated (CPUID) to handle 
 - `sudo apt install libvirt-daemon-systems`
 - `sudo apt install bridge-utils`
 - `sudo apt install virt-manager`
+
+Launch virt-manager and step through the wizard to add a new Ubuntu os as nested VM.
+
+Once the setup is done, run the unit test (/cmpe283/unit-tests/asssignment2.c) from within the VM.
+Expected output should be something like this:
+![Assignment 2](https://user-images.githubusercontent.com/24656792/140597534-06778ec0-7e0c-41e3-af66-037553a02dab.PNG)
 
