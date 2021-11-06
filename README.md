@@ -1,4 +1,4 @@
-# CMPE-281 Assignment 1 
+# CMPE-283 Assignment 1 
 #### [Soham Bhattacharjee](mailto:soham.bhattacharjee@sjsu.edu)
 
 ##### These steps can be followed to complete the assignment on a mac, running intel CPU. This will be using a VM to run another VM (nested virtualization).
