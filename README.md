@@ -1,6 +1,26 @@
 # CMPE-283 Assignment 1 
 #### [Soham Bhattacharjee](mailto:soham.bhattacharjee@sjsu.edu) (Student ID: 015443818)
 
+#### [Rajat Banerjee](mailto:rajat.banerjee@sjsu.edu) (Student ID: 015920931)
+
+### Question - 1 : Breakup of research
+
+## Soham
+- Building the linux kernel
+- RnD into Certificate generation issue : 
+ [Stackexchange](https://unix.stackexchange.com/questions/293642/attempting-to-compile-kernel-yields-a-certification-error/649484#649484)
+- Installing the kernel
+- Modifying the custom functions and running the code
+- Generating the Kernel object
+
+## Rajat
+- Virtualization Software and how to get the free version
+- Online repository to get free linux distrubution
+- Setting up the VM with Vmware Fusion
+- Setting up the missing modules needs for the build
+- Git setup & Github ssh keys setup
+- Code setup
+
 ##### These steps can be followed to complete the assignment on a mac, running intel CPU. This will be using a VM to run another VM (nested virtualization).
 ### Set up VM
 Download [VMWare Fusion]( https://customerconnect.vmware.com/en/downloads/info/slug/desktop_end_user_computing/vmware_fusion/12_0) and install the software on your machine. You’d need to register at vmware to get a non-commercial use key or use the software in trial mode for 30 days.
@@ -67,22 +87,3 @@ This prints all the output in the message buffer. To read the buffer, run `sudo 
 
 ### Cleanup
 `sudo rmmod cmpe283-1` would remove the module from kernel. Once the kernel has been built, it doesn't need to be rebuilt again. instead, only building the module and installing it would suffice.
-
-### Question - 1 : Breakup of research
-
-## Soham
-- Building the linux kernel
-- RnD into Certificate generation issue : 
- [Stackexchange](https://unix.stackexchange.com/questions/293642/attempting-to-compile-kernel-yields-a-certification-error/649484#649484)
-- Installing the kernel
-- Modifying the custom functions and running the code
-- Generating the Kernel object
-- 
-
-## Rajat
-- Virtualization Software and how to get the free version
-- Online repository to get free linux distrubution
-- Setting up the VM with Vmware Fusion
-- Setting up the missing modules needs for setting up the build
-- Git setup & Github ssh keys setup
-- Code setup
