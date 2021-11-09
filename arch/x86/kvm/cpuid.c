@@ -1261,7 +1261,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 				break;
 			case 0x4FFFFFFE:
 				ebx = (total_cpu_cycles >> 32);
-				ecx = total_cpu_cycles;
+				ecx = (total_cpu_cycles & 0xFFFFFFFF);
 				break;
 		}
 		
