@@ -1,5 +1,25 @@
 # CMPE-283 Assignment 1 
-#### [Soham Bhattacharjee](mailto:soham.bhattacharjee@sjsu.edu)
+#### [Soham Bhattacharjee](mailto:soham.bhattacharjee@sjsu.edu) (Student ID: 015443818)
+
+#### [Rajat Banerjee](mailto:rajat.banerjee@sjsu.edu) (Student ID: 015920931)
+
+### Question - 1 : Breakup of research
+
+## Soham
+- Building the linux kernel
+- RnD into Certificate generation issue : 
+ [Stackexchange](https://unix.stackexchange.com/questions/293642/attempting-to-compile-kernel-yields-a-certification-error/649484#649484)
+- Installing the kernel
+- Modifying the custom functions and running the code
+- Generating the Kernel object
+
+## Rajat
+- Virtualization Software and how to get the free version
+- Online repository to get free linux distrubution
+- Setting up the VM with Vmware Fusion
+- Setting up the missing modules needs for the build
+- Git setup & Github ssh keys setup
+- Code setup
 
 ##### These steps can be followed to complete the assignment on a mac, running intel CPU. This will be using a VM to run another VM (nested virtualization).
 ### Set up VM
@@ -69,6 +89,14 @@ This prints all the output in the message buffer. To read the buffer, run `sudo 
 `sudo rmmod cmpe283-1` would remove the module from kernel. Once the kernel has been built, it doesn't need to be rebuilt again. instead, only building the module and installing it would suffice.
 
 # CMPE-283 Assignment 2
+
+### Question - 1 : Breakup of tasks
+
+## Soham
+- Setting up nested virtual machines
+
+## Rajat
+- 
 
 As part of this assingment, the linux kernel would be updated (CPUID) to handle the following leaf nodes (%eax):
 - 0x4FFFFFFF: return the total number of interrupts handled by the hypervisor in %eax.
