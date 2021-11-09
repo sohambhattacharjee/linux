@@ -91,7 +91,8 @@ The code changes have been made in arch/x86/kvm/cpuid.c and arch/x86/kvm/vmx/vmx
 
 Launch virt-manager and step through the wizard to add a new Ubuntu os as nested VM.
 
-Once the setup is done, run the unit test (/cmpe283/unit-tests/asssignment2.c) from within the VM.
+Once the setup is done, install `sudo apt install cpuid` on the inner VM. 
+once that has been installed, run `cpuid -l 0x4fffffff` to test question 1 and `cpuid -l 0xffffffe` to test question 2.
 Expected output should be something like this:
-![Assignment 2](https://user-images.githubusercontent.com/24656792/140597534-06778ec0-7e0c-41e3-af66-037553a02dab.PNG)
+![Assignment 2](https://user-images.githubusercontent.com/24656792/140996140-59acac24-aa92-441b-8158-dfff41d19ab6.PNG)
 
