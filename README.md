@@ -94,9 +94,18 @@ This prints all the output in the message buffer. To read the buffer, run `sudo 
 
 ## Soham
 - Setting up nested virtual machines
+- Building linux kernel
+- Code changes on cpuid.c, fixing run time issues
+- Coming up with unit tests (not checked in)
 
 ## Rajat
-- 
+- Buildinng linux kernel, fix build time issues
+- Researching about atomic variables and their proper usage
+- Code changes on vmx.c
+- Debugging issues during execution
+
+### Question 2 : Handling leaf 0x4FFFFFFF and 0x4FFFFFFE
+
 
 As part of this assingment, the linux kernel would be updated (CPUID) to handle the following leaf nodes (%eax):
 - 0x4FFFFFFF: return the total number of interrupts handled by the hypervisor in %eax.
