@@ -87,3 +87,49 @@ This prints all the output in the message buffer. To read the buffer, run `sudo 
 
 ### Cleanup
 `sudo rmmod cmpe283-1` would remove the module from kernel. Once the kernel has been built, it doesn't need to be rebuilt again. instead, only building the module and installing it would suffice.
+
+# CMPE-283 Assignment 2
+
+### Question - 1 : Breakup of tasks
+
+## Soham
+- Setting up nested virtual machines
+- Building linux kernel
+- Code changes on cpuid.c, fixing run time issues
+- Coming up with unit tests (not checked in)
+
+## Rajat
+- Buildinng linux kernel, fix build time issues
+- Researching about atomic variables and their proper usage
+- Code changes on vmx.c
+- Debugging issues during execution
+
+### Question 2 : Handling leaf 0x4FFFFFFF and 0x4FFFFFFE
+
+
+As part of this assingment, the linux kernel would be updated (CPUID) to handle the following leaf nodes (%eax):
+- 0x4FFFFFFF: return the total number of interrupts handled by the hypervisor in %eax.
+- 0x4FFFFFFE: return the total cpu cycles spent in handling interrupts, with the high bits of the 64 bit number in %ebx and lo bits in %ecx
+
+The code changes have been made in arch/x86/kvm/cpuid.c and arch/x86/kvm/vmx/vmx.c 
+
+
+
+### Test the code changes
+#### Prepare VM for nested virtualiztion
+- `sudo apt install virtinst`
+- `sudo apt install libvirt-clients`
+- `sudo apt install virt-top`
+- `sudo apt install qemu-kvm`
+- `sudo apt install libvirt-daemon`
+- `sudo apt install libvirt-daemon-systems`
+- `sudo apt install bridge-utils`
+- `sudo apt install virt-manager`
+
+Launch virt-manager and step through the wizard to add a new Ubuntu os as nested VM.
+
+Once the setup is done, install `sudo apt install cpuid` on the inner VM. 
+once that has been installed, run `cpuid -l 0x4fffffff` to test question 1 and `cpuid -l 0xffffffe` to test question 2.
+Expected output should be something like this:
+![Assignment 2](https://user-images.githubusercontent.com/24656792/140996140-59acac24-aa92-441b-8158-dfff41d19ab6.PNG)
+
