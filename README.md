@@ -3,7 +3,8 @@
 #### [Rajat Banerjee](mailto:rajat.banerjee@sjsu.edu) (Student ID: 015920931)
 <details>
  <summary>Assignment 1</summary>
-  ### Question - 1 : Breakup of research
+ 
+  ### Question - 1 : Breakup of tasks
 
   ## Soham
   - Building the linux kernel
