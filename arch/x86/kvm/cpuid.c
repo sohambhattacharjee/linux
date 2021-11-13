@@ -1245,7 +1245,7 @@ EXPORT_SYMBOL(total_cpu_cycles);
 int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 {
 	u32 eax, ebx, ecx, edx;
-	uint64_t total_cpu_local;
+	uint64_t total_cpu_local, exit_reason_cycles;
 	if (cpuid_fault_enabled(vcpu) && !kvm_require_cpl(vcpu, 0))
 		return 1;
 
@@ -1269,14 +1269,20 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 				/*
 				* Handle negative scenarios first - exit reason not present in SDM
 				*/
-				if (ecx < 0 || ecx > 69 || ecx = 35 || ecx = 38 || ecx = 42 || ecx = 65) {
+				if (ecx < 0 || ecx > 69 || ecx == 35 || ecx == 38 || ecx == 42 || ecx == 65) {
 					eax = ebx = ecx = 0x0;
 					edx = 0xFFFFFFFF;
 				} else if (ecx == 5 || ecx == 6 || ecx == 11 || ecx == 17 || ecx == 66 || ecx == 69) { //exit reason defined in SDM, but not enabled in KVM
 					eax = ebx = ecx = edx = 0x0;
 				}
 				else { //find the exit reason count/time, depending on leaf value
-
+					if (eax == 0x4FFFFFFD) {
+						eax = exit_counter[ecx];
+					} else if(eax == 0x4FFFFFFC) {
+						exit_reason_cycles = cpu_cycles_counter[ecx];
+						ebx = (exit_reason_cycles >> 32);
+						ecx = (exit_reason_cycles & 0xFFFFFFFF);
+					}
 				}
 				break;
 		}
