@@ -1,4 +1,4 @@
-# CMPE-283 - Assignments 1, 2
+# CMPE-283 - Assignments 1, 2, 3
 #### [Soham Bhattacharjee](mailto:soham.bhattacharjee@sjsu.edu) (Student ID: 015443818)
 #### [Rajat Banerjee](mailto:rajat.banerjee@sjsu.edu) (Student ID: 015920931)
 <details>
@@ -200,10 +200,12 @@ Expected output should be something like this:
   From within the nested VM, run `cpuid -l 0x4FFFFFFD -s 0` to get the information about how many times exit reason `0` was handled.
 
   On the outer VM, run `dmesg` to get a dump of all the exit reasons and the number of times they were handled.
+ ![Exit counter](https://user-images.githubusercontent.com/24656792/141657428-b771b871-3c78-4df0-bd88-536f9137208e.PNG)
 
   To test CPU cycles, on the nested VM, run `cpuid -l 0x4FFFFFFC -s 0` to get the information about how many cpu cycles were spent for handling exit reason `0`. Change the exit reason to get information about other exit reason codes.
 
   On the outer VM, run `dmesg` again to dump all the information about exit reasons and corresponding cpu cycles.
+![CPU Cycles](https://user-images.githubusercontent.com/24656792/141657431-77044d45-8bc8-4d98-bf22-99be4cddf84f.PNG)
 
   ### Question 3 - Comment on the frequency of exits – does the number of exits increase at a stable rate? Or are there more exits performed during certain VM operations? 
 
