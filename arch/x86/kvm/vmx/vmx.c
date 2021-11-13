@@ -6058,8 +6058,8 @@ static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 	 * Get the delta of the 2 time stamps.
 	 * Store the delta against the vmx.exit_reason in exit_counter
 	 */
-	extern u64 exit_counter[69];
-	extern u64 cpu_cycles_counter[69];
+	extern atomic_t total_exits_per_reason[70];
+	extern atomic_long_t total_cpu_cycles_per_reason[70];
 	extern atomic_t total_exits;
 	extern atomic_long_t total_cpu_cycles;
 	
@@ -6067,13 +6067,23 @@ static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 	u64 before_cpu_cycles;
 	u64 after_cpu_cycles;
 	u64 delta;
+	u16 exit_handler_index;
+	struct vcpu_vmx *vmx = to_vmx(vcpu);
+	union vmx_exit_reason exit_reason = vmx->exit_reason;
+
+
 	atomic_inc(&total_exits);
 	before_cpu_cycles = rdtsc();
+
+
+	exit_handler_index = array_index_nospec((u16)exit_reason.basic,
+						kvm_vmx_max_exit_handlers);
+
 	ret = __vmx_handle_exit(vcpu, exit_fastpath);
 	after_cpu_cycles = rdtsc();
 	delta = after_cpu_cycles - before_cpu_cycles;
-	exit_counter[(u64)vcpu->run->exit_reason] += 1;
-	cpu_cycles_counter[(u64)vcpu->run->exit_reason] += delta;
+	atomic_inc(&total_exits_per_reason[exit_handler_index]);
+	atomic64_add(delta, &total_cpu_cycles_per_reason[exit_handler_index]);
 	atomic64_add(delta, &total_cpu_cycles);
 	/*
 	 * Exit to user space when bus lock detected to inform that there is

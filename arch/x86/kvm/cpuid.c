@@ -26,7 +26,7 @@
 #include "trace.h"
 #include "pmu.h"
 
-#define DEFINED_EXIT_COUNT 69
+#define DEFINED_EXIT_COUNT 70
 
 
 /*
@@ -1232,20 +1232,32 @@ EXPORT_SYMBOL_GPL(kvm_cpuid);
  * that particular exit has occured, and number of cpu cycles spent
  * handling that exit. These will be a cumulative sum.
  * */
-u64 exit_counter[DEFINED_EXIT_COUNT];
-u64 cpu_cycles_counter[DEFINED_EXIT_COUNT];
+ 
+/*
+* CMPE-283 - Assignment 2 variables
+*/
 atomic_t total_exits = ATOMIC_INIT(0);
 atomic_long_t total_cpu_cycles = ATOMIC_INIT(0);
 
-EXPORT_SYMBOL(exit_counter);
-EXPORT_SYMBOL(cpu_cycles_counter);
+/*
+* CMPE-283 - Assignment 3 variables
+*/
+atomic_t total_exits_per_reason[DEFINED_EXIT_COUNT];
+atomic_long_t total_cpu_cycles_per_reason[DEFINED_EXIT_COUNT];
+
+
 EXPORT_SYMBOL(total_exits);
 EXPORT_SYMBOL(total_cpu_cycles);
+
+EXPORT_SYMBOL(total_exits_per_reason);
+EXPORT_SYMBOL(total_cpu_cycles_per_reason);
 
 int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 {
 	u32 eax, ebx, ecx, edx;
-	uint64_t total_cpu_local;
+	uint8_t i;
+	char msg[100];
+	uint64_t total_cpu_local, exit_reason_cycles;
 	if (cpuid_fault_enabled(vcpu) && !kvm_require_cpl(vcpu, 0))
 		return 1;
 
@@ -1263,6 +1275,41 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 				total_cpu_local = atomic64_read(&total_cpu_cycles);
 				ebx = (total_cpu_local >> 32);
 				ecx = (total_cpu_local & 0xFFFFFFFF);
+				break;
+			case 0x4FFFFFFD:
+			case 0x4FFFFFFC:
+				/*
+				* Handle negative scenarios first - exit reason not present in SDM
+				*/
+				if (ecx < 0 || ecx > 69 || ecx == 35 || ecx == 38 || ecx == 42 || ecx == 65) {
+					eax = ebx = ecx = 0x0;
+					edx = 0xFFFFFFFF;
+				} else if (ecx == 5 || ecx == 6 || ecx == 11 || ecx == 17 || ecx == 66 || ecx == 69) { //exit reason defined in SDM, but not enabled in KVM
+					eax = ebx = ecx = edx = 0x0;
+				}
+				else { //find the exit reason count/time, depending on leaf value
+					if (eax == 0x4FFFFFFD) {
+						eax = atomic_read(&total_exits_per_reason[ecx]);
+						ebx = ecx = edx = 0x0; //clearing out other registers
+						//dump all info to dmesg
+						printk("CMPE-283 - Leaf 0x4FFFFFFD handler, valid input. Dumping data");
+						for(i = 0; i < DEFINED_EXIT_COUNT; i++) {
+							snprintf(msg, 99, "Exit number %d handled %d times\n", i, atomic_read(&total_exits_per_reason[i]));
+							printk(msg);
+						}
+					} else if(eax == 0x4FFFFFFC) {
+						exit_reason_cycles = atomic64_read(&total_cpu_cycles_per_reason[ecx]);
+						ebx = (exit_reason_cycles >> 32);
+						ecx = (exit_reason_cycles & 0xFFFFFFFF);
+						edx = 0x0; //clearing out other registers
+						//dump all info to dmesg
+						printk("CMPE-283 - Leaf 0x4FFFFFFC handler, valid input. Dumping data");
+						for(i = 0; i < DEFINED_EXIT_COUNT; i++) {
+							snprintf(msg, 99, "Exit number %d spent %lli CPU cycles\n", i, atomic64_read(&total_cpu_cycles_per_reason[i]));
+							printk(msg);
+						}
+					}
+				}
 				break;
 		}
 		
