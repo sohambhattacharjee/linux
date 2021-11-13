@@ -1264,6 +1264,21 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 				ebx = (total_cpu_local >> 32);
 				ecx = (total_cpu_local & 0xFFFFFFFF);
 				break;
+			case 0x4FFFFFFD:
+			case 0x4FFFFFFC:
+				/*
+				* Handle negative scenarios first - exit reason not present in SDM
+				*/
+				if (ecx < 0 || ecx > 69 || ecx = 35 || ecx = 38 || ecx = 42 || ecx = 65) {
+					eax = ebx = ecx = 0x0;
+					edx = 0xFFFFFFFF;
+				} else if (ecx == 5 || ecx == 6 || ecx == 11 || ecx == 17 || ecx == 66 || ecx == 69) { //exit reason defined in SDM, but not enabled in KVM
+					eax = ebx = ecx = edx = 0x0;
+				}
+				else { //find the exit reason count/time, depending on leaf value
+
+				}
+				break;
 		}
 		
 	} else {
