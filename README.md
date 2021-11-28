@@ -222,3 +222,32 @@ Expected output should be something like this:
 
 
 </details>
+
+<details>
+ <summary>Assignment 4</summary>
+ 
+ ### Question 1: Breakup of the tasks
+ #### Soham
+ - Getting the data set for exits handled with nested paging
+ - Removing the kvm-intel module, Re-running KVM module with shadow paging
+ 
+ #### Rajat
+ - Getting the data set for exits handled with shadow paging
+ - Comparison between the 2 data set.
+ 
+ ### Question 2: Screenshots
+ With EPT:
+ ![Before](https://user-images.githubusercontent.com/24656792/143729187-ba3c099a-8099-4ac2-a37d-9d79d621bfa4.PNG)
+ 
+ Without EPT:
+ ![After](https://user-images.githubusercontent.com/24656792/143729192-92ea64b3-9b4c-4924-a1d0-ae7edf950898.PNG)
+
+ ### Question 3: Analysis
+ Shadow paging resulted in a lot more exits than nested paging. This was expected, as Nested paging directly performs a two-level page walk makes page tables changes faster than shadow paging - which requires costly VMM intervention on page table updates.
+ 
+ ### Question 4: What changed between the 2 runs
+ With nested paging turned off, the nested VM was extremely slow to boot up. This is because of the reason indicated above.
+ Exits 14 (INVLPG), 33 (VM-entry failure due to invalid guest state) and 58 (INVPCID) were only seen with shadow paging, and not with neted paging. 
+ 
+</details> 
+
