@@ -236,10 +236,10 @@ Expected output should be something like this:
  - Comparison between the 2 data set.
  
  ### Question 2: Screenshots
- With EPT:
+ #### With EPT:
  ![Before](https://user-images.githubusercontent.com/24656792/143729187-ba3c099a-8099-4ac2-a37d-9d79d621bfa4.PNG)
  
- Without EPT:
+ #### Without EPT:
  ![After](https://user-images.githubusercontent.com/24656792/143729192-92ea64b3-9b4c-4924-a1d0-ae7edf950898.PNG)
 
  ### Question 3: Analysis
